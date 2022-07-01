@@ -21,5 +21,5 @@
 # THE SOFTWARE.
 
 module Types
-	VERSION = "0.0.0"
+	VERSION = "0.2.0"
 end
