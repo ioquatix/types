@@ -6,7 +6,7 @@
 require_relative 'generic'
 
 module Types
-	module Interface
+	class Interface
 		extend Generic
 		
 		def initialize(methods)
@@ -25,7 +25,7 @@ module Types
 			buffer << "Interface("
 			
 			if @methods&.any?
-				buffer << @methods.join(', ')
+				buffer << @methods.map(&:inspect).join(', ')
 			end
 			
 			buffer << ")"
@@ -39,8 +39,19 @@ module Types
 			end
 		end
 		
-		def self.parse(input)
-			Object.const_get(input).new
+		def parse(input)
+			case input
+			when ::String
+				instance = eval(input)
+			else
+				instance = input
+			end
+			
+			if valid?(instance)
+				return instance
+			else
+				raise ArgumentError, "Cannot coerce #{input.inspect} into #{self}!"
+			end
 		end
 	end
 	

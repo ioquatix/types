@@ -14,6 +14,7 @@ require_relative 'types/decimal'
 require_relative 'types/float'
 require_relative 'types/hash'
 require_relative 'types/integer'
+require_relative 'types/interface'
 require_relative 'types/lambda'
 require_relative 'types/method'
 require_relative 'types/nil'
@@ -23,7 +24,7 @@ require_relative 'types/symbol'
 require_relative 'types/tuple'
 
 module Types
-	VALID_SIGNATURE = /\A[a-zA-Z\(\):, |]+\z/
+	VALID_SIGNATURE = /\A[a-zA-Z\(\):,_|\s]+\z/
 	
 	def self.parse(signature)
 		if signature =~ VALID_SIGNATURE
