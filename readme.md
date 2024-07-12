@@ -2,6 +2,8 @@
 
 Provides abstract types for the Ruby programming language which can used for documentation and evaluation purposes.
 
+[![Development Status](https://github.com/ioquatix/types/workflows/Test/badge.svg)](https://github.com/ioquatix/types/actions?workflow=Test)
+
 ## Motivation
 
 I've been working on documentation tools and Ruby has several implementations for adding type information. However, I've feel like we've over-complicated the language of types and I'd like something simpler and more compatible with the Ruby language.
@@ -14,7 +16,7 @@ The expressions possible with this gem are a subset of all possible expressions 
 
 ## Installation
 
-```shell
+``` shell
 bundle add types
 ```
 
@@ -22,7 +24,7 @@ bundle add types
 
 Parsing type signatures can be done using {ruby Types.parse} which returns a object that represents the given type, e.g.
 
-```ruby
+``` ruby
 string_type = Types.parse("String")
 string_type # => Types::String
 
@@ -36,7 +38,7 @@ hash_type.value_type # => Types::Integer
 
 You can generate a string representation of a type too:
 
-```ruby
+``` ruby
 # A lambda that takes an Integer as an argument and returns an Integer:
 lambda_type = Types.parse("Lambda(Integer, returns: Integer)")
 lambda_type.to_s # => "Lambda(Integer, returns: Integer)"
@@ -46,7 +48,7 @@ lambda_type.to_s # => "Lambda(Integer, returns: Integer)"
 
 In addition, you can coerce strings into strongly typed values:
 
-```ruby
+``` ruby
 array_type = Types.parse("Array(String)")
 array_type.parse("'foo', 'bar'") # => ["foo", "bar"]
 ```
@@ -57,7 +59,7 @@ This can be useful for argument parsing.
 
 This gem is designed to be integrated into documentation tools. It provides a way to document the types of parameters and return values of a function. This information is stored in `@parameter` and `@returns` comments.
 
-```ruby
+``` ruby
 # Double the value of a number.
 # @parameter value [Numeric] The value to double.
 # @returns [Numeric] The doubled value.
