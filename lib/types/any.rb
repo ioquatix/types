@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Released under the MIT License.
-# Copyright, 2022-2024, by Samuel Williams.
+# Copyright, 2022-2025, by Samuel Williams.
 
 module Types
 	# Represents a union of multiple types. The first type to match the input is used.
