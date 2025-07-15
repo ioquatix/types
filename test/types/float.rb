@@ -32,4 +32,10 @@ describe Types::Float do
 	it "can parse negative integers" do
 		expect(type.parse(-42)).to be == -42.0
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "Float"
+		end
+	end
 end

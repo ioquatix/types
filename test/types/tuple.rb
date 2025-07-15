@@ -24,4 +24,10 @@ describe Types::Tuple do
 	it "can parse strings" do
 		expect(type.parse('"Hello,World", "42"')).to be == ["Hello,World", 42]
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "[String, Integer]"
+		end
+	end
 end

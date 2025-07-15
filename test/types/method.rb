@@ -28,4 +28,10 @@ describe Types::Method do
 	it "can parse strings" do
 		expect(type.parse("to_s")).to be(:kind_of?, UnboundMethod)
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "Method[Object, () -> String]"
+		end
+	end
 end

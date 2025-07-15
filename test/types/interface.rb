@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 # Released under the MIT License.
-# Copyright, 2022-2024, by Samuel Williams.
+# Copyright, 2024, by Samuel Williams.
 
 require "types"
 
 describe Types::Interface do
-	let(:signature) {"Interface(:to_s, :to_i, :to_f)"}
+	let(:signature) {"Interface(to_s: Method(Any(), returns: Any()), to_i: Method(Any(), returns: Any()), to_f: Method(Any(), returns: Any()))"}
 	let(:type) {Types.parse(signature)}
 	
 	it "can parse type signature" do
@@ -24,5 +24,13 @@ describe Types::Interface do
 	it "can parse strings" do
 		value = type.parse("10")
 		expect(value).to be(:kind_of?, Integer)
+	end
+	
+	with "names only" do
+		let(:signature) {"Interface(:to_s, :to_i, :to_f)"}
+		
+		it "can parse type signature" do
+			expect(type).to be(:kind_of?, subject)
+		end
 	end
 end

@@ -20,4 +20,10 @@ describe Types::Block do
 	it "is a composite type" do
 		expect(type).to be(:composite?)
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "Proc[(String, Integer) -> String]"
+		end
+	end
 end

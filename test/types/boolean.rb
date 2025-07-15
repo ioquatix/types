@@ -25,4 +25,10 @@ describe Types::Boolean do
 		expect(type.parse("yes")).to be == true
 		expect(type.parse("no")).to be == false
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "bool"
+		end
+	end
 end

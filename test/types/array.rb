@@ -24,4 +24,15 @@ describe Types::Array do
 	it "can parse strings" do
 		expect(type.parse('"Hello,World", "42"')).to be == ["Hello,World", "42"]
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "Array[String]"
+		end
+		
+		it "emits nested RBS type" do
+			nested = Types::Array(Types::Hash(Types::String, Types::Integer))
+			expect(nested.to_rbs).to be == "Array[{ String => Integer }]"
+		end
+	end
 end

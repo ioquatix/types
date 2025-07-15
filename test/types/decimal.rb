@@ -28,4 +28,10 @@ describe Types::Decimal do
 	it "can parse decimals" do
 		expect(type.parse(42.25)).to be == 42.25
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "Decimal"
+		end
+	end
 end

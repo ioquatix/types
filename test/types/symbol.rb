@@ -28,4 +28,10 @@ describe Types::Symbol do
 	it "can parse symbols" do
 		expect(type.parse(:type)).to be == :type
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "Symbol"
+		end
+	end
 end

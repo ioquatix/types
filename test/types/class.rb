@@ -36,4 +36,10 @@ describe Types::Class do
 			expect{type.parse("String")}.to raise_exception(ArgumentError)
 		end
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "Class"
+		end
+	end
 end

@@ -24,4 +24,10 @@ describe Types::String do
 	it "can parse strings" do
 		expect(type.parse("Hello World")).to be == "Hello World"
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "String"
+		end
+	end
 end

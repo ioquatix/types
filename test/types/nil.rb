@@ -24,4 +24,10 @@ describe Types::Nil do
 	it "can parse strings" do
 		expect(type.parse("nil")).to be == nil
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "nil"
+		end
+	end
 end

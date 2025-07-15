@@ -32,4 +32,10 @@ describe Types::Integer do
 	it "can parse negative integers" do
 		expect(type.parse(-42)).to be == -42
 	end
+	
+	with "#to_rbs" do
+		it "emits RBS type" do
+			expect(type.to_rbs).to be == "Integer"
+		end
+	end
 end

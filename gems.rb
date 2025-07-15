@@ -5,6 +5,8 @@
 
 source "https://rubygems.org"
 
+gem "agent-context"
+
 group :maintenance, optional: true do
 	gem "bake-modernize"
 	gem "bake-gem"
@@ -15,6 +17,8 @@ end
 group :test do
 	gem "sus"
 	gem "covered"
+	gem "decode"
+	gem "rubocop"
 	
 	gem "bake-test"
 	gem "bake-test-external"

@@ -4,33 +4,33 @@
 # Copyright, 2022-2024, by Samuel Williams.
 
 module Types
-	# An ordered list of types. The first type to match the input is used.
+	# Represents a union of multiple types. The first type to match the input is used.
 	#
-	#	```ruby
-	#	type = Bake::Types::Any(Bake::Types::String, Bake::Types::Integer)
-	#	```
-	#
+	# ```ruby
+	# type = Types::Any(Types::String, Types::Integer)
+	# ```
 	class Any
 		# Initialize the instance with an array of types.
-		# @parameter types [Array] the array of types.
+		# @parameter types [Array] The array of types.
 		def initialize(types)
 			@types = types
 		end
-		
-		# Create a copy of the current instance with the other type appended.
-		# @parameter other [Type] the type instance to append.
+
+		# @returns [Any] a new {Any} with the other type appended.
+		# @parameter other [Type] The type instance to append.
 		def | other
 			self.class.new([*@types, other])
 		end
-		
-		# Whether any of the listed types is a composite type.
-		# @returns [Boolean] true if any of the listed types is `composite?`.
+
+		# @returns [Boolean] true if any of the listed types is composite.
 		def composite?
-			@types.any?{|type| type.composite?}
+			@types.any? {|type| type.composite?}
 		end
-		
-		# Parse an input string, trying the listed types in order, returning the first one which doesn't raise an exception.
-		# @parameter input [String] the input to parse, e.g. `"5"`.
+
+		# Parses the input using the listed types in order, returning the first one that succeeds.
+		# @parameter input [String] the input to parse.
+		# @returns [Object] the parsed value.
+		# @raises [ArgumentError] if no type can parse the input.
 		def parse(input)
 			@types.each do |type|
 				return type.parse(input)
@@ -45,25 +45,29 @@ module Types
 			end
 		end
 		
-		# As a class type, accepts any value.
+		# Accepts any value as a class type.
 		def self.parse(value)
 			value
 		end
 		
-		# Generate a readable string representation of the listed types.
+		# @returns [String] a readable string representation of the listed types.
 		def to_s
-			"#{@types.join(' | ')}"
+			if @types.empty?
+				"Any()"
+			else
+				"#{@types.join(' | ')}"
+			end
+		end
+		
+		# @returns [String] the RBS type string, e.g. `String | Integer`.
+		def to_rbs
+			@types.map(&:to_rbs).join(" | ")
 		end
 	end
 	
-	# A type constructor.
-	#
-	#	```ruby
-	#	Any(Integer, String)
-	#	```
-	#
-	# See [Any.initialize](#Bake::Types::Any::initialize).
-	#
+	# Constructs an {Any} type from the given types.
+	# @parameter types [Array(Type)] The types to include in the union.
+	# @returns [Any] a new {Any} type.
 	def self.Any(*types)
 		Any.new(types)
 	end
