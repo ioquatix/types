@@ -30,4 +30,14 @@ describe Types::String do
 			expect(type.to_rbs).to be == "String"
 		end
 	end
+	
+	with ".resolve" do
+		it "resolves to Ruby String class" do
+			expect(type.resolve).to be == ::String
+		end
+		
+		it "resolves through parsing" do
+			expect(Types.parse("String").resolve).to be == ::String
+		end
+	end
 end

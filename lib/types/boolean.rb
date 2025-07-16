@@ -34,5 +34,11 @@ module Types
 		def self.to_rbs
 			"bool"
 		end
+		
+		# Resolves to nil since Ruby doesn't have a single Boolean class.
+		# @returns [nil] Returns nil as there's no single Ruby Boolean class.
+		def self.resolve
+			nil
+		end
 	end
 end

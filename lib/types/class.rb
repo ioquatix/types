@@ -66,6 +66,12 @@ module Types
 			
 			return klass
 		end
+		
+		# Resolves to the actual Ruby Class class.
+		# @returns [Class] The Class class.
+		def self.resolve
+			::Class
+		end
 	end
 	
 	# Constructs a {Class} type with an optional base class constraint.

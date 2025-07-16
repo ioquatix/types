@@ -26,5 +26,11 @@ module Types
 		def self.to_rbs
 			"Symbol"
 		end
+		
+		# Resolves to the actual Ruby Symbol class.
+		# @returns [Class] The Symbol class.
+		def self.resolve
+			::Symbol
+		end
 	end
 end

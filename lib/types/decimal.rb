@@ -23,10 +23,19 @@ module Types
 		def self.parse(input)
 			case input
 			when ::Float
-				BigDecimal(input, ::Float::DIG+1)
+				Kernel.BigDecimal(input, ::Float::DIG+1)
 			else
-				BigDecimal(input)
+				Kernel.BigDecimal(input)
 			end
 		end
+		
+		# Resolves to the actual Ruby BigDecimal class.
+		# @returns [Class] The BigDecimal class.
+		def self.resolve
+			::BigDecimal
+		end
 	end
+	
+	# Alias for the Decimal type.
+	BigDecimal = Decimal
 end

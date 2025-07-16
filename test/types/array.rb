@@ -35,4 +35,19 @@ describe Types::Array do
 			expect(nested.to_rbs).to be == "Array[{ String => Integer }]"
 		end
 	end
+	
+	with "#resolve" do
+		it "resolves to Ruby Array class" do
+			expect(type.resolve).to be == ::Array
+		end
+		
+		it "resolves through parsing" do
+			expect(Types.parse("Array(String)").resolve).to be == ::Array
+		end
+		
+		it "resolves with unknown types" do
+			array_unknown = Types.parse("Array(UnknownType)")
+			expect(array_unknown.resolve).to be == ::Array
+		end
+	end
 end

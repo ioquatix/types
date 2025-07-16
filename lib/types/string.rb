@@ -26,5 +26,11 @@ module Types
 		def self.to_rbs
 			"String"
 		end
+		
+		# Resolves to the actual Ruby String class.
+		# @returns [Class] The String class.
+		def self.resolve
+			::String
+		end
 	end
 end

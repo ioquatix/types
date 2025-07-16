@@ -27,5 +27,11 @@ module Types
 		def self.to_rbs
 			"Float"
 		end
+		
+		# Resolves to the actual Ruby Float class.
+		# @returns [Class] The Float class.
+		def self.resolve
+			::Float
+		end
 	end
 end

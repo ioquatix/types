@@ -44,6 +44,12 @@ module Types
 			end
 		end
 		
+		# Resolves to the actual Ruby Array class, since there is no direct support for tuples in Ruby.
+		# @returns [Class] The Array class.
+		def resolve
+			::Array
+		end
+		
 		# @returns [String] the string representation of the tuple type.
 		def to_s
 			"Tuple(#{@item_types.join(', ')})"

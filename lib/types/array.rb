@@ -57,6 +57,12 @@ module Types
 			"Array[#{@item_type.to_rbs}]"
 		end
 		
+		# Resolves to the actual Ruby Array class.
+		# @returns [Class] The Array class.
+		def resolve
+			::Array
+		end
+		
 		private
 		
 		def parse_string(input)

@@ -26,11 +26,9 @@ describe Types::Named do
 		expect(type.to_s).to be == "Array(UnknownType)"
 	end
 	
-	it "should parse values through without modification" do
+	it "is unable to parse values of unknown types" do
 		type = Types.parse("UnknownType1")
-		expect(type.parse("hello")).to be == "hello"
-		expect(type.parse(42)).to be == 42
-		expect(type.parse(nil)).to be == nil
+		expect{type.parse("foo")}.to raise_exception(ArgumentError, message: be =~ /Unknown type:/)
 	end
 	
 	it "should work with the | operator" do
@@ -71,5 +69,36 @@ describe Types::Named do
 		
 		named = Types::Named.new("NonExistentClass")
 		expect(named.resolve).to be == nil
+	end
+	
+	it "should resolve correctly when used in parsing" do
+		# Test parsing unknown types creates Named that resolves to nil
+		parsed_unknown = Types.parse("UnknownType1")
+		expect(parsed_unknown).to be_a(Types::Named)
+		expect(parsed_unknown.resolve).to be == nil
+		
+		# Test parsing known Ruby types through Named
+		parsed_known = Types::Named.new("File")
+		expect(parsed_known.resolve).to be == ::File
+	end
+	
+	it "should resolve correctly with namespaced types" do
+		# Test with a namespaced Ruby constant
+		named = Types::Named.new("File::Stat")
+		expect(named.resolve).to be == ::File::Stat
+		
+		# Test with non-existent namespace
+		named = Types::Named.new("NonExistent::Class")
+		expect(named.resolve).to be == nil
+		
+		# Test with deeply nested namespace
+		named = Types::Named.new("NonExistent::Namespace::Class")
+		expect(named.resolve).to be == nil
+	end
+	
+	it "should resolve through parsing for unknown types" do
+		# Unknown types through parsing (creates Named via const_missing)
+		expect(Types.parse("UnknownType1").resolve).to be == nil
+		expect(Types.parse("MyCustomClass").resolve).to be == nil
 	end
 end 

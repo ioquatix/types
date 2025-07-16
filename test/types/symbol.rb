@@ -34,4 +34,10 @@ describe Types::Symbol do
 			expect(type.to_rbs).to be == "Symbol"
 		end
 	end
+	
+	with ".resolve" do
+		it "resolves to Ruby Symbol class" do
+			expect(type.resolve).to be == ::Symbol
+		end
+	end
 end

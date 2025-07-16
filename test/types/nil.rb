@@ -30,4 +30,10 @@ describe Types::Nil do
 			expect(type.to_rbs).to be == "nil"
 		end
 	end
+	
+	with ".resolve" do
+		it "resolves to Ruby NilClass" do
+			expect(type.resolve).to be == ::NilClass
+		end
+	end
 end

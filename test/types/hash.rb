@@ -35,4 +35,19 @@ describe Types::Hash do
 			expect(nested.to_rbs).to be == "{ String => Array[Integer] }"
 		end
 	end
+	
+	with "#resolve" do
+		it "resolves to Ruby Hash class" do
+			expect(type.resolve).to be == ::Hash
+		end
+		
+		it "resolves through parsing" do
+			expect(Types.parse("Hash(String, Integer)").resolve).to be == ::Hash
+		end
+		
+		it "resolves with unknown types" do
+			hash_unknown = Types.parse("Hash(UnknownType, String)")
+			expect(hash_unknown.resolve).to be == ::Hash
+		end
+	end
 end

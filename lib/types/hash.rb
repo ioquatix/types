@@ -52,6 +52,12 @@ module Types
 			"{ #{@key_type.to_rbs} => #{@value_type.to_rbs} }"
 		end
 		
+		# Resolves to the actual Ruby Hash class.
+		# @returns [Class] The Hash class.
+		def resolve
+			::Hash
+		end
+		
 		private
 		
 		def parse_string(input)

@@ -31,4 +31,10 @@ describe Types::Boolean do
 			expect(type.to_rbs).to be == "bool"
 		end
 	end
+	
+	with ".resolve" do
+		it "resolves to nil since Ruby has no single Boolean class" do
+			expect(type.resolve).to be == nil
+		end
+	end
 end

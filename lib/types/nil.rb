@@ -31,5 +31,11 @@ module Types
 		def self.to_rbs
 			"nil"
 		end
+		
+		# Resolves to the actual Ruby NilClass.
+		# @returns [Class] The NilClass.
+		def self.resolve
+			::NilClass
+		end
 	end
 end

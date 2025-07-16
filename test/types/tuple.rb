@@ -30,4 +30,14 @@ describe Types::Tuple do
 			expect(type.to_rbs).to be == "[String, Integer]"
 		end
 	end
+	
+	with "#resolve" do
+		it "resolves to Ruby Array class since there is no direct support for tuples" do
+			expect(type.resolve).to be == ::Array
+		end
+		
+		it "resolves through parsing" do
+			expect(Types.parse("Tuple(String, Integer)").resolve).to be == ::Array
+		end
+	end
 end

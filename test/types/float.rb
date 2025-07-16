@@ -38,4 +38,10 @@ describe Types::Float do
 			expect(type.to_rbs).to be == "Float"
 		end
 	end
+	
+	with ".resolve" do
+		it "resolves to Ruby Float class" do
+			expect(type.resolve).to be == ::Float
+		end
+	end
 end

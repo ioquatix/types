@@ -38,4 +38,14 @@ describe Types::Integer do
 			expect(type.to_rbs).to be == "Integer"
 		end
 	end
+	
+	with ".resolve" do
+		it "resolves to Ruby Integer class" do
+			expect(type.resolve).to be == ::Integer
+		end
+		
+		it "resolves through parsing" do
+			expect(Types.parse("Integer").resolve).to be == ::Integer
+		end
+	end
 end

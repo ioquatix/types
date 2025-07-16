@@ -27,5 +27,11 @@ module Types
 		def self.to_rbs
 			"Integer"
 		end
+		
+		# Resolves to the actual Ruby Integer class.
+		# @returns [Class] The Integer class.
+		def self.resolve
+			::Integer
+		end
 	end
 end

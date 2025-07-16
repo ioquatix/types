@@ -39,4 +39,10 @@ describe Types::Any do
 			expect(nested.to_rbs).to be == "Array[String] | { String => Integer }"
 		end
 	end
+	
+	with "#resolve" do
+		it "does not have resolve method since union types don't map to single Ruby types" do
+			expect(type).not.to be(:respond_to?, :resolve)
+		end
+	end
 end

@@ -28,7 +28,17 @@ module Types
 		# @parameter input [Object] The value to parse.
 		# @returns [Object] The input value unchanged.
 		def parse(input)
-			input
+			if resolved = self.resolve
+				if resolved.respond_to?(:load)
+					return resolved.load(input)
+				elsif resolved.respond_to?(:parse)
+					return resolved.parse(input)
+				else
+					raise ArgumentError, "Type #{@name} does not implement .load or .parse!"
+				end
+			else
+				raise ArgumentError, "Unknown type: #{@name}"
+			end
 		end
 		
 		# Resolves the named type to the actual Ruby type if it exists.
