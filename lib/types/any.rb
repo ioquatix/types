@@ -15,18 +15,18 @@ module Types
 		def initialize(types)
 			@types = types
 		end
-
+		
 		# @returns [Any] a new {Any} with the other type appended.
 		# @parameter other [Type] The type instance to append.
 		def | other
 			self.class.new([*@types, other])
 		end
-
+		
 		# @returns [Boolean] true if any of the listed types is composite.
 		def composite?
 			@types.any? {|type| type.composite?}
 		end
-
+		
 		# Parses the input using the listed types in order, returning the first one that succeeds.
 		# @parameter input [String] the input to parse.
 		# @returns [Object] the parsed value.

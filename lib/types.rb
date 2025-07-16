@@ -33,7 +33,7 @@ module Types
 	# Types.parse("Array(String)") # => Types::Array(Types::String)
 	# ```
 	VALID_SIGNATURE = /\A[a-zA-Z\(\):,_|\s]+\z/
-
+	
 	# Parses a type signature string and returns the corresponding type instance.
 	# @parameter signature [String] The type signature to parse.
 	# @returns [Object] The type instance.

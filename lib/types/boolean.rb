@@ -29,7 +29,7 @@ module Types
 				raise ArgumentError, "Cannot coerce #{input.inspect} into Boolean!"
 			end
 		end
-
+		
 		# @returns [String] the RBS type string, e.g. `bool`.
 		def self.to_rbs
 			"bool"

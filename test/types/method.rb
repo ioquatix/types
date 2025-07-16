@@ -11,7 +11,7 @@ describe Types::Method do
 	
 	it "can parse type signature" do
 		expect(type).to be(:kind_of?, subject)
-
+		
 		expect(type.receiver_type).to be == ::Object
 		expect(type.argument_types).to be == []
 		expect(type.return_type).to be == Types::String
