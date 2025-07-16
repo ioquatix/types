@@ -4,7 +4,7 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 module Types
-	# Represents a union of multiple types. The first type to match the input is used.
+	# Represents a union of multiple types. The first type to match the input is used. If no types are provided, this matches any type or value.
 	#
 	# ```ruby
 	# type = Types::Any(Types::String, Types::Integer)
@@ -32,6 +32,9 @@ module Types
 		# @returns [Object] the parsed value.
 		# @raises [ArgumentError] if no type can parse the input.
 		def parse(input)
+			# If there are no types, we can just return the input.
+			return input if @types.empty?
+			
 			@types.each do |type|
 				return type.parse(input)
 			rescue => error
@@ -59,9 +62,14 @@ module Types
 			end
 		end
 		
+		# Returns the RBS type string for the union of the listed types. If there are no types, it returns `untyped`.
 		# @returns [String] the RBS type string, e.g. `String | Integer`.
 		def to_rbs
-			@types.map(&:to_rbs).join(" | ")
+			if @types.empty?
+				"untyped"
+			else
+				@types.map(&:to_rbs).join(" | ")
+			end
 		end
 	end
 	
