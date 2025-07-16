@@ -17,6 +17,7 @@ require_relative "types/integer"
 require_relative "types/interface"
 require_relative "types/lambda"
 require_relative "types/method"
+require_relative "types/named"
 require_relative "types/nil"
 require_relative "types/numeric"
 require_relative "types/string"
@@ -32,7 +33,7 @@ module Types
 	# ```ruby
 	# Types.parse("Array(String)") # => Types::Array(Types::String)
 	# ```
-	VALID_SIGNATURE = /\A[a-zA-Z\(\):,_|\s]+\z/
+	VALID_SIGNATURE = /\A[a-zA-Z0-9\(\):,_|\s]+\z/
 	
 	# Parses a type signature string and returns the corresponding type instance.
 	# @parameter signature [String] The type signature to parse.
@@ -44,5 +45,13 @@ module Types
 		else
 			raise ArgumentError, "Invalid type signature: #{signature.inspect}!"
 		end
+	end
+	
+	# Handles missing constants by creating Named types for unknown types.
+	# This allows parsing of type signatures with unknown types.
+	# @parameter name [Symbol] The name of the missing constant.
+	# @returns [Named] A Named type representing the unknown type.
+	def self.const_missing(name)
+		Named(name.to_s)
 	end
 end

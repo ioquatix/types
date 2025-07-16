@@ -1,0 +1,74 @@
+# frozen_string_literal: true
+
+# Released under the MIT License.
+# Copyright, 2022-2025, by Samuel Williams.
+
+require_relative "generic"
+
+module Types
+	# Represents a named type that may not be defined yet.
+	#
+	# ```ruby
+	# type = Types::Named("CustomType")
+	# type.parse(value) # => value (pass-through)
+	# ```
+	class Named
+		include Generic
+		
+		# Initialize with a type name.
+		# @parameter name [String] The name of the type.
+		def initialize(name)
+			@name = name
+		end
+		
+		# @returns [String] The name of the type.
+		attr :name
+		
+		# Parses the input by passing it through unchanged.
+		# @parameter input [Object] The value to parse.
+		# @returns [Object] The input value unchanged.
+		def parse(input)
+			input
+		end
+		
+		# Resolves the named type to the actual Ruby type if it exists.
+		# @returns [Class, Module, nil] The resolved Ruby type or nil if not found.
+		def resolve
+			Object.const_get(@name)
+		rescue NameError
+			nil
+		end
+		
+		# @returns [String] the RBS type string using the name.
+		def to_rbs
+			@name
+		end
+		
+		# @returns [String] the string representation of the named type.
+		def to_s
+			@name
+		end
+		
+		# @returns [Boolean] true if other is a Named type with the same name.
+		def == other
+			other.is_a?(Named) && @name == other.name
+		end
+		
+		# @returns [Integer] hash code based on the name.
+		def hash
+			@name.hash
+		end
+		
+		# @returns [Boolean] whether this type is composite.
+		def composite?
+			false
+		end
+	end
+	
+	# Constructs a {Named} type with the given name.
+	# @parameter name [String] The name of the type.
+	# @returns [Named] a new {Named} type.
+	def self.Named(name)
+		Named.new(name)
+	end
+end 
