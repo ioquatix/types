@@ -57,7 +57,7 @@ module Types
 		
 		# @returns [String] the RBS type string, e.g. `Method[Receiver, (Args) -> Return]`.
 		def to_rbs
-			argument_types = @argument_types.map {|t| t.to_rbs}.join(", ")
+			argument_types = @argument_types.map(&:to_rbs).join(", ")
 			return_type = @return_type ? @return_type.to_rbs : "void"
 			
 			return "Method[#{@receiver_type}, (#{argument_types}) -> #{return_type}]"

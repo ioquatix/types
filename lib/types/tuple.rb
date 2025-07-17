@@ -57,7 +57,7 @@ module Types
 		
 		# @returns [String] the RBS type string, e.g. `[String, Integer]`.
 		def to_rbs
-			"[#{@item_types.map {|t| t.to_rbs}.join(', ')}]"
+			"[#{@item_types.map(&:to_rbs).join(', ')}]"
 		end
 		
 		private

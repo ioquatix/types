@@ -24,7 +24,7 @@ module Types
 		
 		# @returns [Boolean] true if any of the listed types is composite.
 		def composite?
-			@types.any? {|type| type.composite?}
+			@types.any?(&:composite?)
 		end
 		
 		# Parses the input using the listed types in order, returning the first one that succeeds.
