@@ -63,4 +63,7 @@ module Types
 	def self.const_missing(name)
 		Named(name.to_s)
 	end
+	
+	# Bare classes and modules should be convertable to RBS strings.
+	Module.alias_method(:to_rbs, :to_s)
 end

@@ -101,4 +101,33 @@ describe Types::Named do
 		expect(Types.parse("UnknownType1").resolve).to be == nil
 		expect(Types.parse("MyCustomClass").resolve).to be == nil
 	end
-end 
+	
+	it "should allow to_rbs calls on parsed types with real classes" do
+		# Test the specific scenario mentioned by the user
+		type = Types.parse("Hash(String, File)")
+		expect(type.to_rbs).to be == "{ String => File }"
+	end
+	
+	it "should allow to_rbs calls on various composite types with real classes" do
+		# Test Array with File
+		array_type = Types.parse("Array(File)")
+		expect(array_type.to_rbs).to be == "Array[File]"
+		
+		# Test Hash with different real classes
+		hash_type = Types.parse("Hash(String, Integer)")
+		expect(hash_type.to_rbs).to be == "{ String => Integer }"
+		
+		# Test Tuple with real classes
+		tuple_type = Types.parse("Tuple(String, File, Integer)")
+		expect(tuple_type.to_rbs).to be == "[String, File, Integer]"
+	end
+	
+	it "should work with to_rbs on real class instances directly" do
+		# Test that real classes have the to_rbs method aliased to to_s
+		expect(File.to_rbs).to be == "File"
+		expect(String.to_rbs).to be == "String"
+		expect(Integer.to_rbs).to be == "Integer"
+		expect(Array.to_rbs).to be == "Array"
+		expect(Hash.to_rbs).to be == "Hash"
+	end
+end

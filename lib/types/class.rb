@@ -30,7 +30,7 @@ module Types
 		end
 		
 		# Resolve the base class if possible.
-		# @returns [Class] the resolved base class.
+		# @returns [Class | Nil] the resolved base class.
 		def resolve
 			Object.const_get(@base.to_s)
 		rescue NameError
