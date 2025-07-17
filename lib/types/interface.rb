@@ -18,7 +18,7 @@ module Types
 	# type.valid?(obj) # => true if obj responds to :foo and :bar
 	# ```
 	class Interface
-		extend Generic
+		include Generic
 		
 		# @parameter methods [Array(Symbol)] The required method names.
 		def initialize(methods)

@@ -33,4 +33,15 @@ describe Types::Interface do
 			expect(type).to be(:kind_of?, subject)
 		end
 	end
+	
+	with "|" do
+		let(:other) {Types::String}
+		
+		it "can create union type" do
+			union = type | other
+			
+			expect(union).to be(:kind_of?, Types::Any)
+			expect(union.to_s).to be == "Interface(to_s: Method(Any(), returns: Any()), to_i: Method(Any(), returns: Any()), to_f: Method(Any(), returns: Any())) | String"
+		end
+	end
 end
