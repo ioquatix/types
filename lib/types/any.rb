@@ -35,6 +35,9 @@ module Types
 			# If there are no types, we can just return the input.
 			return input if @types.empty?
 			
+			# We need to track the last error, because we want to raise the last error that occurred, if any:
+			last_error = nil
+			
 			@types.each do |type|
 				return type.parse(input)
 			rescue => error
