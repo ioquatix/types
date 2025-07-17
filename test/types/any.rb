@@ -29,6 +29,14 @@ describe Types::Any do
 		expect(type.parse("42")).to be == 42
 	end
 	
+	it "accepts anything when empty (like RBS untyped)" do
+		empty_any = Types::Any.new([])
+		expect(empty_any.parse("hello")).to be == "hello"
+		expect(empty_any.parse(42)).to be == 42
+		expect(empty_any.parse(nil)).to be == nil
+		expect(empty_any.parse([])).to be == []
+	end
+	
 	with "#to_rbs" do
 		it "emits RBS type" do
 			expect(type.to_rbs).to be == "Integer | String"
@@ -37,6 +45,11 @@ describe Types::Any do
 		it "emits nested RBS type" do
 			nested = Types::Any.new([Types::Array(Types::String), Types::Hash(Types::String, Types::Integer)])
 			expect(nested.to_rbs).to be == "Array[String] | { String => Integer }"
+		end
+		
+		it "emits 'untyped' for empty Any" do
+			empty_any = Types::Any.new([])
+			expect(empty_any.to_rbs).to be == "untyped"
 		end
 	end
 	

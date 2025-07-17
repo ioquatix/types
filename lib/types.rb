@@ -41,9 +41,18 @@ module Types
 	# @raises [ArgumentError] if the signature is invalid.
 	def self.parse(signature)
 		if signature =~ VALID_SIGNATURE
-			eval(signature, binding)
+			# Replace leading :: with Top:: to handle absolute type paths
+			normalized_signature = signature.gsub(/(?<=\A|\W)::/, "TOP::")
+			eval(normalized_signature, binding)
 		else
 			raise ArgumentError, "Invalid type signature: #{signature.inspect}!"
+		end
+	end
+	
+	# Handles absolute type paths by creating absolute Named types for unknown types.
+	module TOP
+		def self.const_missing(name)
+			Named.new("::#{name}")
 		end
 	end
 	

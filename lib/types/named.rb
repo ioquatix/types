@@ -12,7 +12,7 @@ module Types
 	# type = Types::Named("CustomType")
 	# type.parse(value) # => value (pass-through)
 	# ```
-	class Named
+	class Named < Module
 		include Generic
 		
 		# Initialize with a type name.
@@ -23,6 +23,16 @@ module Types
 		
 		# @returns [String] The name of the type.
 		attr :name
+		
+		# @returns [Boolean] whether the type is absolute.
+		def absolute?
+			@name.start_with?("::")
+		end
+		
+		# @returns [Boolean] whether the type is relative.
+		def relative?
+			!absolute?
+		end
 		
 		# Parses the input by passing it through unchanged.
 		# @parameter input [Object] The value to parse.
@@ -42,7 +52,7 @@ module Types
 		end
 		
 		# Resolves the named type to the actual Ruby type if it exists.
-		# @returns [Class, Module, nil] The resolved Ruby type or nil if not found.
+		# @returns [Class | Module | Nil] The resolved Ruby type or nil if not found.
 		def resolve
 			Object.const_get(@name)
 		rescue NameError
@@ -59,6 +69,10 @@ module Types
 			@name
 		end
 		
+		def inspect
+			"<#{self.class} #{@name}>"
+		end
+		
 		# @returns [Boolean] true if other is a Named type with the same name.
 		def == other
 			other.is_a?(Named) && @name == other.name
@@ -72,6 +86,14 @@ module Types
 		# @returns [Boolean] whether this type is composite.
 		def composite?
 			false
+		end
+		
+		# Handles missing constants by creating nested Named types.
+		# This allows parsing of nested type signatures like Foo::Bar.
+		# @parameter name [Symbol] The name of the missing constant.
+		# @returns [Named] A Named type representing the nested unknown type.
+		def const_missing(name)
+			Named.new("#{@name}::#{name}")
 		end
 	end
 	

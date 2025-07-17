@@ -29,15 +29,24 @@ module Types
 			true
 		end
 		
+		# Resolve the base class if possible.
+		# @returns [Class] the resolved base class.
+		def resolve
+			Object.const_get(@base.to_s)
+		rescue NameError
+			nil
+		end
+		
 		# Parses the input as a class, optionally checking the base class constraint.
 		# @parameter input [String] The class name to parse.
 		# @returns [Class] the parsed class.
 		# @raises [ArgumentError] if the class is not a subclass of the base.
 		def parse(input)
 			klass = Object.const_get(input)
+			base = self.resolve
 			
-			if @base and !klass.ancestors.include?(@base)
-				raise ArgumentError, "Class #{klass} is not a subclass of #{@base}!"
+			if base and !klass.ancestors.include?(base)
+				raise ArgumentError, "Class #{klass} is not a subclass of #{base}!"
 			end
 			
 			return klass

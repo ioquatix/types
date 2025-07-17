@@ -4,7 +4,7 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 module Types
-	# Represents a union of multiple types. The first type to match the input is used. If no types are provided, this matches any type or value.
+	# Represents a union of multiple types. The first type to match the input is used. If no types are specified, this matches any type or value.
 	#
 	# ```ruby
 	# type = Types::Any(Types::String, Types::Integer)
