@@ -6,6 +6,7 @@
 source "https://rubygems.org"
 
 gem "agent-context"
+gem "rbs"
 
 group :maintenance, optional: true do
 	gem "bake-modernize"

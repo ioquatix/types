@@ -42,12 +42,12 @@ module Types
 			end
 		end
 		
-		# @returns [String] the RBS type string, e.g. `Proc[(String, Integer) -> String]`.
+		# @returns [String] the RBS type string, e.g. `^(String, Integer) -> String`.
 		def to_rbs
 			argument_types = @argument_types.map(&:to_rbs).join(", ")
 			return_type = @return_type ? @return_type.to_rbs : "void"
 			
-			return "Proc[(#{argument_types}) -> #{return_type}]"
+			return "^(#{argument_types}) -> #{return_type}"
 		end
 	end
 	

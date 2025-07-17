@@ -47,9 +47,9 @@ module Types
 			"Hash(#{@key_type}, #{@value_type})"
 		end
 		
-		# @returns [String] the RBS type string, e.g. `{ String => Integer }`.
+		# @returns [String] the RBS type string, e.g. `Hash[String, Integer]`.
 		def to_rbs
-			"{ #{@key_type.to_rbs} => #{@value_type.to_rbs} }"
+			"Hash[#{@key_type.to_rbs}, #{@value_type.to_rbs}]"
 		end
 		
 		# Resolves to the actual Ruby Hash class.

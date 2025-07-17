@@ -4,6 +4,7 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 require "types"
+require "rbs"
 
 describe Types::Integer do
 	let(:signature) {"Integer"}
@@ -36,6 +37,11 @@ describe Types::Integer do
 	with "#to_rbs" do
 		it "emits RBS type" do
 			expect(type.to_rbs).to be == "Integer"
+		end
+		
+		it "parses emitted RBS type with RBS::Parser.parse_type" do
+			parsed = RBS::Parser.parse_type(type.to_rbs)
+			expect(parsed).to be_a(RBS::Types::ClassInstance)
 		end
 	end
 	

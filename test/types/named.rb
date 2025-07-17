@@ -4,6 +4,7 @@
 # Copyright, 2025, by Samuel Williams.
 
 require "types"
+require "rbs"
 
 describe Types::Named do
 	it "should handle unknown types via const_missing" do
@@ -105,7 +106,11 @@ describe Types::Named do
 	it "should allow to_rbs calls on parsed types with real classes" do
 		# Test the specific scenario mentioned by the user
 		type = Types.parse("Hash(String, File)")
-		expect(type.to_rbs).to be == "{ String => File }"
+		expect(type.to_rbs).to be == "Hash[String, File]"
+		
+		# Confirm it parses as RBS
+		parsed = RBS::Parser.parse_type(type.to_rbs)
+		expect(parsed).to be_a(RBS::Types::ClassInstance)
 	end
 	
 	it "should allow to_rbs calls on various composite types with real classes" do
@@ -113,13 +118,22 @@ describe Types::Named do
 		array_type = Types.parse("Array(File)")
 		expect(array_type.to_rbs).to be == "Array[File]"
 		
+		parsed_array = RBS::Parser.parse_type(array_type.to_rbs)
+		expect(parsed_array).to be_a(RBS::Types::ClassInstance)
+		
 		# Test Hash with different real classes
 		hash_type = Types.parse("Hash(String, Integer)")
-		expect(hash_type.to_rbs).to be == "{ String => Integer }"
+		expect(hash_type.to_rbs).to be == "Hash[String, Integer]"
+		
+		parsed_hash = RBS::Parser.parse_type(hash_type.to_rbs)
+		expect(parsed_hash).to be_a(RBS::Types::ClassInstance)
 		
 		# Test Tuple with real classes
 		tuple_type = Types.parse("Tuple(String, File, Integer)")
 		expect(tuple_type.to_rbs).to be == "[String, File, Integer]"
+		
+		parsed_tuple = RBS::Parser.parse_type(tuple_type.to_rbs)
+		expect(parsed_tuple).to be_a(RBS::Types::Tuple)
 	end
 	
 	it "should work with to_rbs on real class instances directly" do

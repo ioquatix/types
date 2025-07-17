@@ -4,6 +4,7 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 require "types"
+require "rbs"
 
 describe Types::Hash do
 	let(:signature) {"Hash(String, Integer)"}
@@ -27,12 +28,23 @@ describe Types::Hash do
 	
 	with "#to_rbs" do
 		it "emits RBS type" do
-			expect(type.to_rbs).to be == "{ String => Integer }"
+			expect(type.to_rbs).to be == "Hash[String, Integer]"
+		end
+		
+		it "parses emitted RBS type with RBS::Parser.parse_type" do
+			parsed = RBS::Parser.parse_type(type.to_rbs)
+			expect(parsed).to be_a(RBS::Types::ClassInstance)
 		end
 		
 		it "emits nested RBS type" do
 			nested = Types::Hash(Types::String, Types::Array(Types::Integer))
-			expect(nested.to_rbs).to be == "{ String => Array[Integer] }"
+			expect(nested.to_rbs).to be == "Hash[String, Array[Integer]]"
+		end
+		
+		it "parses emitted nested RBS type with RBS::Parser.parse_type" do
+			nested = Types::Hash(Types::String, Types::Array(Types::Integer))
+			parsed = RBS::Parser.parse_type(nested.to_rbs)
+			expect(parsed).to be_a(RBS::Types::ClassInstance)
 		end
 	end
 	

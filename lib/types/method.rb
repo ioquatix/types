@@ -55,12 +55,9 @@ module Types
 			return buffer
 		end
 		
-		# @returns [String] the RBS type string, e.g. `Method[Receiver, (Args) -> Return]`.
+		# @returns [String] the RBS type string, e.g. `::Method`.
 		def to_rbs
-			argument_types = @argument_types.map(&:to_rbs).join(", ")
-			return_type = @return_type ? @return_type.to_rbs : "void"
-			
-			return "Method[#{@receiver_type}, (#{argument_types}) -> #{return_type}]"
+			"Method"
 		end
 		
 		# Parses the input as a method or proc.
