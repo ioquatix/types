@@ -121,6 +121,13 @@ describe Types::Named do
 		parsed_array = RBS::Parser.parse_type(array_type.to_rbs)
 		expect(parsed_array).to be_a(RBS::Types::ClassInstance)
 		
+		# Test Enumerator with File
+		enumerator_type = Types.parse("Enumerator(File)")
+		expect(enumerator_type.to_rbs).to be == "Enumerator[File]"
+		
+		parsed_enumerator = RBS::Parser.parse_type(enumerator_type.to_rbs)
+		expect(parsed_enumerator).to be_a(RBS::Types::ClassInstance)
+		
 		# Test Hash with different real classes
 		hash_type = Types.parse("Hash(String, Integer)")
 		expect(hash_type.to_rbs).to be == "Hash[String, Integer]"
