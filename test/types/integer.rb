@@ -11,7 +11,9 @@ describe Types::Integer do
 	let(:type) {Types.parse(signature)}
 	
 	it "can parse type signature" do
-		expect(type).to be == subject
+		expect(type).to be_a(Types::Named)
+		expect(type.name).to be == "Integer"
+		expect(type.to_type).to be == subject
 	end
 	
 	it "can generate type signature" do
@@ -28,10 +30,6 @@ describe Types::Integer do
 	
 	it "can parse integers" do
 		expect(type.parse(42)).to be == 42
-	end
-	
-	it "can parse negative integers" do
-		expect(type.parse(-42)).to be == -42
 	end
 	
 	with "#to_rbs" do

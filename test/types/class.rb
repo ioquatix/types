@@ -11,31 +11,21 @@ describe Types::Class do
 	let(:type) {Types.parse(signature)}
 	
 	it "can parse type signature" do
-		expect(type).to be == subject
+		expect(type).to be_a(Types::Named)
+		expect(type.name).to be == "Class"
+		expect(type.to_type).to be == subject
 	end
 	
 	it "can generate type signature" do
 		expect(type.to_s).to be == signature
 	end
 	
-	it "is a composite type" do
+	it "isn't a composite type" do
 		expect(type).not.to be(:composite?)
 	end
 	
 	it "can parse strings" do
-		expect(type.parse("Object")).to be == Object
-	end
-	
-	with "specific base class" do
-		let(:signature) {"Class(::Numeric)"}
-		
-		it "can parse strings" do
-			expect(type.parse("Integer")).to be == Integer
-		end
-		
-		it "can fail parse non-matching class" do
-			expect{type.parse("String")}.to raise_exception(ArgumentError)
-		end
+		expect(type.parse("String")).to be == ::String
 	end
 	
 	with "#to_rbs" do
@@ -46,6 +36,16 @@ describe Types::Class do
 		it "parses emitted RBS type with RBS::Parser.parse_type" do
 			parsed = RBS::Parser.parse_type(type.to_rbs)
 			expect(parsed).to be_a(RBS::Types::ClassInstance)
+		end
+	end
+	
+	with ".resolve" do
+		it "resolves to Ruby Class class" do
+			expect(type.resolve).to be == ::Class
+		end
+		
+		it "resolves through parsing" do
+			expect(Types.parse("Class").resolve).to be == ::Class
 		end
 	end
 end

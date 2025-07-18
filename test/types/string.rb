@@ -12,7 +12,9 @@ describe Types::String do
 	let(:type) {Types.parse(signature)}
 	
 	it "can parse type signature" do
-		expect(type).to be == subject
+		expect(type).to be_a(Types::Named)
+		expect(type.name).to be == "String"
+		expect(type.to_type).to be == subject
 	end
 	
 	it "can generate type signature" do

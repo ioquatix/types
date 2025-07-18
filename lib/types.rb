@@ -29,6 +29,4 @@ require_relative "types/tuple"
 
 # @namespace
 module Types
-	# Bare classes and modules should be convertable to RBS strings.
-	Module.alias_method(:to_rbs, :to_s)
 end

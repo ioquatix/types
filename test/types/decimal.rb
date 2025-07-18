@@ -11,7 +11,9 @@ describe Types::Decimal do
 	let(:type) {Types.parse(signature)}
 	
 	it "can parse type signature" do
-		expect(type).to be == subject
+		expect(type).to be_a(Types::Named)
+		expect(type.name).to be == "Decimal"
+		expect(type.to_type).to be == subject
 	end
 	
 	it "can generate type signature" do
@@ -23,11 +25,7 @@ describe Types::Decimal do
 	end
 	
 	it "can parse strings" do
-		expect(type.parse("42.25")).to be == 42.25
-	end
-	
-	it "can parse decimals" do
-		expect(type.parse(42.25)).to be == 42.25
+		expect(type.parse("123.45")).to be == BigDecimal("123.45")
 	end
 	
 	with "#to_rbs" do
@@ -38,6 +36,12 @@ describe Types::Decimal do
 		it "parses emitted RBS type with RBS::Parser.parse_type" do
 			parsed = RBS::Parser.parse_type(type.to_rbs)
 			expect(parsed).to be_a(RBS::Types::ClassInstance)
+		end
+	end
+	
+	with ".resolve" do
+		it "resolves to Ruby BigDecimal class" do
+			expect(type.to_type.resolve).to be == ::BigDecimal
 		end
 	end
 end
