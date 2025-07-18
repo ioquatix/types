@@ -4,6 +4,7 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 require_relative "generic"
+require_relative "parser"
 
 module Types
 	# Represents a class type, optionally constrained to a base class.
@@ -86,7 +87,7 @@ module Types
 	# Constructs a {Class} type with an optional base class constraint.
 	# @parameter base [Class] The base class constraint.
 	# @returns [Class] a new {Class} type.
-	def self.Class(base = Object)
+	def PARSER.Class(base = Object)
 		Class.new(base)
 	end
 end

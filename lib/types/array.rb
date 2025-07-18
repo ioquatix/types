@@ -4,12 +4,13 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 require_relative "generic"
+require_relative "parser"
 
 module Types
 	# Represents an array type with a specific item type.
 	#
 	# ```ruby
-	# type = Types::Array(Types::Integer)
+	# type = Types::Array.new(Types::Integer)
 	# type.parse(["1", "2"]) # => [1, 2]
 	# ```
 	class Array
@@ -77,7 +78,7 @@ module Types
 	# Constructs an {Array} type from the given item type.
 	# @parameter item_type [Type] The type of the array elements.
 	# @returns [Array] a new {Array} type.
-	def self.Array(item_type = Any)
+	def PARSER.Array(item_type = Any)
 		Array.new(item_type)
 	end
 end

@@ -89,7 +89,7 @@ module Types
 	# Constructs an {Interface} type from the given method names.
 	# @parameter methods [Array(Symbol)] The required method names.
 	# @returns [Interface] a new {Interface} type.
-	def self.Interface(*names, **methods)
+	def PARSER.Interface(*names, **methods)
 		# This is a deprecated way to create an interfaces with names only. Ideally, we actually need to know the methods.
 		names.each do |name|
 			methods[name.to_sym] = Method.new(Any(), [], Any())

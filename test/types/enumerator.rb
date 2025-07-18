@@ -46,12 +46,12 @@ describe Types::Enumerator do
 		end
 		
 		it "emits nested RBS type" do
-			nested = Types::Enumerator(Types::Hash(Types::String, Types::Integer))
+			nested = Types::Enumerator.new(Types::Hash.new(Types::String, Types::Integer))
 			expect(nested.to_rbs).to be == "Enumerator[Hash[String, Integer]]"
 		end
 		
 		it "parses emitted nested RBS type with RBS::Parser.parse_type" do
-			nested = Types::Enumerator(Types::Hash(Types::String, Types::Integer))
+			nested = Types::Enumerator.new(Types::Hash.new(Types::String, Types::Integer))
 			parsed = RBS::Parser.parse_type(nested.to_rbs)
 			expect(parsed).to be_a(RBS::Types::ClassInstance)
 		end

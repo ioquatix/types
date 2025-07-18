@@ -4,6 +4,7 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 require_relative "method"
+require_relative "parser"
 
 module Types
 	# Represents a block (Proc) type with argument and return types.
@@ -55,7 +56,7 @@ module Types
 	# @parameter argument_types [Array(Type)] The types of the block arguments.
 	# @parameter returns [Type | Nil] The return type of the block.
 	# @returns [Block] a new {Block} type.
-	def self.Block(*argument_types, returns: nil)
+	def PARSER.Block(*argument_types, returns: nil)
 		Block.new(argument_types, returns)
 	end
 end

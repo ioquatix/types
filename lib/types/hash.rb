@@ -4,12 +4,13 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 require_relative "generic"
+require_relative "parser"
 
 module Types
 	# Represents a hash type with key and value types.
 	#
 	# ```ruby
-	# type = Types::Hash(Types::String, Types::Integer)
+	# type = Types::Hash.new(Types::String, Types::Integer)
 	# type.parse({"foo" => "42"}) # => {"foo" => 42}
 	# ```
 	class Hash
@@ -73,7 +74,7 @@ module Types
 	# @parameter key_type [Type] The type of the hash keys.
 	# @parameter value_type [Type] The type of the hash values.
 	# @returns [Hash] a new {Hash} type.
-	def self.Hash(key_type, value_type)
+	def PARSER.Hash(key_type, value_type)
 		Hash.new(key_type, value_type)
 	end
 end
