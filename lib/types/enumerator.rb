@@ -4,6 +4,7 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 require_relative "generic"
+require_relative "parser"
 
 module Types
 	# Represents an enumerator type with a specific item type.
@@ -67,7 +68,7 @@ module Types
 	# Constructs an {Enumerator} type from the given item type.
 	# @parameter item_type [Type] The type of the enumerator elements.
 	# @returns [Enumerator] a new {Enumerator} type.
-	def self.Enumerator(item_type = Any)
+	def PARSER.Enumerator(item_type = Any)
 		Enumerator.new(item_type)
 	end
 end 

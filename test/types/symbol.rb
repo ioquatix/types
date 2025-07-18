@@ -11,7 +11,9 @@ describe Types::Symbol do
 	let(:type) {Types.parse(signature)}
 	
 	it "can parse type signature" do
-		expect(type).to be == subject
+		expect(type).to be_a(Types::Named)
+		expect(type.name).to be == "Symbol"
+		expect(type.to_type).to be == subject
 	end
 	
 	it "can generate type signature" do
@@ -23,11 +25,11 @@ describe Types::Symbol do
 	end
 	
 	it "can parse strings" do
-		expect(type.parse("type")).to be == :type
+		expect(type.parse("foo")).to be == :foo
 	end
 	
 	it "can parse symbols" do
-		expect(type.parse(:type)).to be == :type
+		expect(type.parse(:foo)).to be == :foo
 	end
 	
 	with "#to_rbs" do
@@ -44,6 +46,10 @@ describe Types::Symbol do
 	with ".resolve" do
 		it "resolves to Ruby Symbol class" do
 			expect(type.resolve).to be == ::Symbol
+		end
+		
+		it "resolves through parsing" do
+			expect(Types.parse("Symbol").resolve).to be == ::Symbol
 		end
 	end
 end

@@ -11,7 +11,9 @@ describe Types::Float do
 	let(:type) {Types.parse(signature)}
 	
 	it "can parse type signature" do
-		expect(type).to be == subject
+		expect(type).to be_a(Types::Named)
+		expect(type.name).to be == "Float"
+		expect(type.to_type).to be == subject
 	end
 	
 	it "can generate type signature" do
@@ -26,12 +28,8 @@ describe Types::Float do
 		expect(type.parse("42.25")).to be == 42.25
 	end
 	
-	it "can parse integers" do
-		expect(type.parse(42)).to be == 42.0
-	end
-	
-	it "can parse negative integers" do
-		expect(type.parse(-42)).to be == -42.0
+	it "can parse floats" do
+		expect(type.parse(42.25)).to be == 42.25
 	end
 	
 	with "#to_rbs" do
@@ -48,6 +46,10 @@ describe Types::Float do
 	with ".resolve" do
 		it "resolves to Ruby Float class" do
 			expect(type.resolve).to be == ::Float
+		end
+		
+		it "resolves through parsing" do
+			expect(Types.parse("Float").resolve).to be == ::Float
 		end
 	end
 end

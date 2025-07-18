@@ -3,6 +3,8 @@
 # Released under the MIT License.
 # Copyright, 2022-2025, by Samuel Williams.
 
+require_relative "parser"
+
 module Types
 	# Represents a union of multiple types. The first type to match the input is used. If no types are specified, this matches any type or value.
 	#
@@ -79,7 +81,7 @@ module Types
 	# Constructs an {Any} type from the given types.
 	# @parameter types [Array(Type)] The types to include in the union.
 	# @returns [Any] a new {Any} type.
-	def self.Any(*types)
+	def PARSER.Any(*types)
 		Any.new(types)
 	end
 end

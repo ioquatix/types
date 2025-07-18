@@ -61,7 +61,7 @@ module Types
 	# @parameter argument_types [Array(Type)] The types of the lambda arguments.
 	# @parameter returns [Type | Nil] The return type of the lambda.
 	# @returns [Lambda] a new {Lambda} type.
-	def self.Lambda(*argument_types, returns: nil)
+	def PARSER.Lambda(*argument_types, returns: nil)
 		Lambda.new(argument_types, returns)
 	end
 end

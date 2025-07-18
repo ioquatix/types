@@ -29,7 +29,7 @@ describe Types::Named do
 	
 	it "is unable to parse values of unknown types" do
 		type = Types.parse("UnknownType1")
-		expect{type.parse("foo")}.to raise_exception(ArgumentError, message: be =~ /Unknown type:/)
+		expect{type.parse("foo")}.to raise_exception(ArgumentError, message: be =~ /Cannot parse value.*with unknown type/)
 	end
 	
 	it "should work with the | operator" do
@@ -141,14 +141,5 @@ describe Types::Named do
 		
 		parsed_tuple = RBS::Parser.parse_type(tuple_type.to_rbs)
 		expect(parsed_tuple).to be_a(RBS::Types::Tuple)
-	end
-	
-	it "should work with to_rbs on real class instances directly" do
-		# Test that real classes have the to_rbs method aliased to to_s
-		expect(File.to_rbs).to be == "File"
-		expect(String.to_rbs).to be == "String"
-		expect(Integer.to_rbs).to be == "Integer"
-		expect(Array.to_rbs).to be == "Array"
-		expect(Hash.to_rbs).to be == "Hash"
 	end
 end

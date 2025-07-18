@@ -32,11 +32,11 @@ For more complex types, you can create composite types:
 
 ```ruby
 # Array with specific item type
-array_type = Types::Array(Types::Integer)
+array_type = Types::Array.new(Types::Integer)
 array_type.parse(["1", "2", "3"])  # => [1, 2, 3]
 
 # Hash with key and value types
-hash_type = Types::Hash(Types::String, Types::Integer)
+hash_type = Types::Hash.new(Types::String, Types::Integer)
 hash_type.parse("a:1,b:2")        # => {"a" => 1, "b" => 2}
 
 # Tuple types
@@ -66,8 +66,8 @@ Types.parse("Integer")                   # => Types::Integer
 Types.parse("Float")                     # => Types::Float
 
 # Composite types
-Types.parse("Array(String)")             # => Types::Array(Types::String)
-Types.parse("Hash(String, Integer)")     # => Types::Hash(Types::String, Types::Integer)
+Types.parse("Array(String)")             # => Types::Array.new(Types::String)
+Types.parse("Hash(String, Integer)")     # => Types::Hash.new(Types::String, Types::Integer)
 Types.parse("Tuple(String, Integer)")    # => Types::Tuple(Types::String, Types::Integer)
 
 # Union types
@@ -127,7 +127,7 @@ Types::Boolean.parse("0")         # => false
 Arrays can parse both string representations and actual arrays:
 
 ```ruby
-array_type = Types::Array(Types::Integer)
+array_type = Types::Array.new(Types::Integer)
 
 # Parse string representation
 array_type.parse("1,2,3")         # => [1, 2, 3]
@@ -142,7 +142,7 @@ array_type.parse(["1", "2", "3"]) # => [1, 2, 3]
 Hashes can parse string representations:
 
 ```ruby
-hash_type = Types::Hash(Types::String, Types::Integer)
+hash_type = Types::Hash.new(Types::String, Types::Integer)
 
 # Parse string representation
 hash_type.parse("a:1,b:2,c:3")    # => {"a" => 1, "b" => 2, "c" => 3}
@@ -154,7 +154,7 @@ Parsing methods will raise `ArgumentError` for invalid inputs:
 
 ```ruby
 Types::Integer.parse("not_a_number")  # => ArgumentError
-Types::Array(Types::Integer).parse("invalid")  # => ArgumentError
+Types::Array.new(Types::Integer).parse("invalid")  # => ArgumentError
 ```
 
 ### Practical Example: Command Line Arguments
@@ -167,7 +167,7 @@ def parse_arguments(arguments)
     port: Types::Integer.parse(arguments[:port] || "8080"),
     host: Types::String.parse(arguments[:host] || "localhost"),
     debug: Types::Boolean.parse(arguments[:debug] || "false"),
-    tags: Types::Array(Types::String).parse(arguments[:tags] || "")
+    tags: Types::Array.new(Types::String).parse(arguments[:tags] || "")
   }
   
   config

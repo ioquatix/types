@@ -74,7 +74,7 @@ module Types
 	# Constructs a {Tuple} type from the given item types.
 	# @parameter item_types [Array(Type)] The types of the tuple elements.
 	# @returns [Tuple] a new {Tuple} type.
-	def self.Tuple(*item_types)
+	def PARSER.Tuple(*item_types)
 		Tuple.new(item_types)
 	end
 end

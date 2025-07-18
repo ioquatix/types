@@ -45,14 +45,14 @@ describe Types::Any do
 		
 		it "parses emitted RBS type with RBS::Parser.parse_type" do
 			expect(RBS::Parser.parse_type(type.to_rbs)).to be_a(RBS::Types::Union)
-			nested = Types::Any.new([Types::Array(Types::String), Types::Hash(Types::String, Types::Integer)])
+			nested = Types::Any.new([Types::Array.new(Types::String), Types::Hash.new(Types::String, Types::Integer)])
 			expect(RBS::Parser.parse_type(nested.to_rbs)).to be_a(RBS::Types::Union)
 			empty_any = Types::Any.new([])
 			expect(RBS::Parser.parse_type(empty_any.to_rbs)).to be_a(RBS::Types::Bases::Any)
 		end
 		
 		it "emits nested RBS type" do
-			nested = Types::Any.new([Types::Array(Types::String), Types::Hash(Types::String, Types::Integer)])
+			nested = Types::Any.new([Types::Array.new(Types::String), Types::Hash.new(Types::String, Types::Integer)])
 			expect(nested.to_rbs).to be == "Array[String] | Hash[String, Integer]"
 		end
 		

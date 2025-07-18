@@ -37,12 +37,12 @@ describe Types::Hash do
 		end
 		
 		it "emits nested RBS type" do
-			nested = Types::Hash(Types::String, Types::Array(Types::Integer))
+			nested = Types::Hash.new(Types::String, Types::Array.new(Types::Integer))
 			expect(nested.to_rbs).to be == "Hash[String, Array[Integer]]"
 		end
 		
 		it "parses emitted nested RBS type with RBS::Parser.parse_type" do
-			nested = Types::Hash(Types::String, Types::Array(Types::Integer))
+			nested = Types::Hash.new(Types::String, Types::Array.new(Types::Integer))
 			parsed = RBS::Parser.parse_type(nested.to_rbs)
 			expect(parsed).to be_a(RBS::Types::ClassInstance)
 		end

@@ -53,10 +53,22 @@ module Types
 		
 		# Resolves the named type to the actual Ruby type if it exists.
 		# @returns [Class | Module | Nil] The resolved Ruby type or nil if not found.
-		def resolve
-			Object.const_get(@name)
+		def resolve(relative_to: Object)
+			relative_to.const_get(@name)
 		rescue NameError
 			nil
+		end
+		
+		def to_type
+			resolve(relative_to: Types)
+		end
+		
+		def parse(value)
+			if type = self.to_type
+				type.parse(value)
+			else
+				raise ArgumentError, "Cannot parse value #{value.inspect} with unknown type #{@name}!"
+			end
 		end
 		
 		# @returns [String] the RBS type string using the name.
@@ -100,7 +112,7 @@ module Types
 	# Constructs a {Named} type with the given name.
 	# @parameter name [String] The name of the type.
 	# @returns [Named] a new {Named} type.
-	def self.Named(name)
+	def PARSER.Named(name)
 		Named.new(name)
 	end
 end

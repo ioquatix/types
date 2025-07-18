@@ -11,7 +11,9 @@ describe Types::Nil do
 	let(:type) {Types.parse(signature)}
 	
 	it "can parse type signature" do
-		expect(type).to be == subject
+		expect(type).to be_a(Types::Named)
+		expect(type.name).to be == "Nil"
+		expect(type.to_type).to be == subject
 	end
 	
 	it "can generate type signature" do
@@ -28,18 +30,18 @@ describe Types::Nil do
 	
 	with "#to_rbs" do
 		it "emits RBS type" do
-			expect(type.to_rbs).to be == "nil"
+			expect(type.to_type.to_rbs).to be == "nil"
 		end
 		
 		it "parses emitted RBS type with RBS::Parser.parse_type" do
-			parsed = RBS::Parser.parse_type(type.to_rbs)
+			parsed = RBS::Parser.parse_type(type.to_type.to_rbs)
 			expect(parsed).to be_a(RBS::Types::Bases::Nil)
 		end
 	end
 	
 	with ".resolve" do
 		it "resolves to Ruby NilClass" do
-			expect(type.resolve).to be == ::NilClass
+			expect(type.to_type.resolve).to be == ::NilClass
 		end
 	end
 end

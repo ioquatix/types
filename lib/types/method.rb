@@ -4,6 +4,7 @@
 # Copyright, 2022-2025, by Samuel Williams.
 
 require_relative "generic"
+require_relative "parser"
 
 module Types
 	# Represents a method type attached to a receiver type.
@@ -67,11 +68,11 @@ module Types
 		def parse(input)
 			case input
 			when ::String
-				receiver_type.instance_method(input)
+				receiver_type.resolve.instance_method(input)
 			when ::Proc
 				input
 			else
-				raise ArgumentError, "Cannot coerce #{input.inpsect} into Method!"
+				raise ArgumentError, "Cannot coerce #{input.inspect} into Method!"
 			end
 		end
 	end
@@ -81,7 +82,7 @@ module Types
 	# @parameter argument_types [Array(Type)] The types of the method arguments.
 	# @parameter returns [Type | Nil] The return type of the method.
 	# @returns [Method] a new {Method} type.
-	def self.Method(receiver_type, *argument_types, returns: nil)
+	def PARSER.Method(receiver_type, *argument_types, returns: nil)
 		Method.new(receiver_type, argument_types, returns)
 	end
 end
